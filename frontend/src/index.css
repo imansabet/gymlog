@@ -1,0 +1,23 @@
+@import "@fontsource-variable/space-grotesk/index.css";
+@import "@fontsource-variable/vazirmatn/index.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk Variable", "Vazirmatn Variable", system-ui, sans-serif;
+  --color-bg: #0d0f12;
+  --color-surface: #161a20;
+  --color-line: #232932;
+  --color-muted: #9aa3af;
+  --color-accent: #c8f03c;
+  --color-danger: #ff7a66;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
