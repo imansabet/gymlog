@@ -3,6 +3,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 COPY pyproject.toml uv.lock ./
+ENV UV_DEFAULT_INDEX=https://mirrors.aliyun.com/pypi/simple/
 RUN uv sync --frozen --no-dev --no-install-project
 
 FROM python:3.12-slim
