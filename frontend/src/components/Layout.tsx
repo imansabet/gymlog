@@ -1,5 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { fmtNumber } from '../lib/format'
+import { useOutbox } from '../lib/useWorkouts'
 
 const tabs = [
   {
@@ -47,12 +49,18 @@ const tabs = [
 
 export default function Layout() {
   const { t } = useTranslation()
+  const pending = useOutbox().length
 
   return (
     <div className="mx-auto flex h-dvh max-w-md flex-col bg-bg">
       <main className="flex-1 overflow-y-auto px-5 pt-[max(env(safe-area-inset-top),1.5rem)] pb-4">
         <Outlet />
       </main>
+      {pending > 0 && (
+	  <div className="bg-surface py-1 text-center text-xs text-muted" role="status">
+    	{t('sync.pending', { n: fmtNumber(pending) })}
+  	</div>
+	)}
       <nav className="flex border-t border-line bg-bg pb-[env(safe-area-inset-bottom)]">
         {tabs.map(({ to, key, icon, end }) => (
           <NavLink
@@ -85,3 +93,4 @@ export default function Layout() {
     </div>
   )
 }
+
