@@ -2,9 +2,8 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from app.api import exercises
+from app.api import exercises, workouts
 from app.db.session import get_db
-from app.api import exercises, workouts 
 
 app = FastAPI(title="GymLog API")
 app.include_router(exercises.router)

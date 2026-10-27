@@ -9,13 +9,13 @@ _dev_url = make_url(os.environ["DATABASE_URL"])
 TEST_URL = _dev_url.set(database="gymlog_test")
 os.environ["DATABASE_URL"] = TEST_URL.render_as_string(hide_password=False)
 
-from fastapi.testclient import TestClient  # noqa: E402
+from fastapi.testclient import TestClient
 
-from app import models  # noqa: E402,F401
-from app.db.base import Base  # noqa: E402
-from app.db.session import get_db  # noqa: E402
-from app.main import app as fastapi_app  # noqa: E402
-from app.models import Exercise, ExerciseKind  # noqa: E402
+from app import models  # noqa: F401
+from app.db.base import Base
+from app.db.session import get_db
+from app.main import app as fastapi_app
+from app.models import Exercise, ExerciseKind
 
 
 @pytest.fixture(scope="session")

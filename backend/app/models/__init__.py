@@ -4,6 +4,11 @@ from app.models.user import User
 from app.models.workout import SetType, Workout, WorkoutSet
 
 __all__ = [
-    "BodyMeasurement", "Exercise", "ExerciseKind", "User",
-    "SetType", "Workout", "WorkoutSet",
+    "BodyMeasurement",
+    "Exercise",
+    "ExerciseKind",
+    "SetType",
+    "User",
+    "Workout",
+    "WorkoutSet",
 ]
