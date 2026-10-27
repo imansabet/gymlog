@@ -1,7 +1,7 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
-T0 = datetime(2026, 10, 25, 17, 0, tzinfo=timezone.utc)
+T0 = datetime(2026, 10, 25, 17, 0, tzinfo=UTC)
 
 
 def at(seconds: int) -> str:
