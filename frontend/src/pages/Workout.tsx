@@ -103,9 +103,45 @@ export default function Workout() {
     `${plus}${fmtNumber(w ?? 0)} × ${fmtNumber(r ?? 0)}`
 
   // ---- انتخاب حرکت ----
-  if (!currentId || picking) {
+   if (!currentId || picking) {
+    const discard = () => {
+      outbox.enqueue({ type: 'deleteWorkout', workoutId: id })
+      navigate('/')
+    }
     return (
       <div className="flex flex-col gap-4">
+        <div className="flex h-11 items-center justify-between">
+          <button
+            type="button"
+            onClick={() => (picking ? setPicking(false) : navigate('/'))}
+            aria-label={t('workout.back')}
+            className="-ms-3 flex h-11 w-11 items-center justify-center"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="rtl:rotate-180"
+              aria-hidden="true"
+            >
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          {sets.length === 0 && (
+            <button
+              type="button"
+              onClick={discard}
+              className="h-11 px-1 text-[15px] font-medium text-danger"
+            >
+              {t('workout.discard')}
+            </button>
+          )}
+        </div>
         <h1 className="text-[28px] leading-tight font-bold">{t('workout.choose')}</h1>
         <ul className="flex flex-col gap-2">
           {exercises.map((ex) => (
@@ -123,16 +159,11 @@ export default function Workout() {
             </li>
           ))}
         </ul>
-        {picking && (
-          <button type="button" onClick={() => setPicking(false)} className="h-12 text-muted">
-            {t('workout.back')}
-          </button>
-        )}
       </div>
     )
   }
-
-  // ---- تایمرها ----
+    
+    
   const toSec = (ms: number) => Math.max(0, Math.floor(ms / 1000))
   const workoutSec = toSec(now - new Date(workout.started_at).getTime())
   const restStart = lastEnded?.ended_at

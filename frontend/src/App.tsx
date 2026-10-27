@@ -1,9 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
-import Placeholder from './pages/Placeholder'
-import Today from './pages/Today'
 import History from './pages/History'
+import Placeholder from './pages/Placeholder'
 import Progress from './pages/Progress'
+import Today from './pages/Today'
+import Workout from './pages/Workout'
 import WorkoutDetail from './pages/WorkoutDetail'
 
 export default function App() {
@@ -11,13 +12,13 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Today />} />
-        <Route path="history" element={<Placeholder titleKey="nav.history" />} />
-        <Route path="progress" element={<Placeholder titleKey="nav.progress" />} />
+        <Route path="workout/:id" element={<Workout />} />
+        <Route path="history" element={<History />} />
+        <Route path="history/:id" element={<WorkoutDetail />} />
+        <Route path="progress" element={<Progress />} />
         <Route path="body" element={<Placeholder titleKey="nav.body" />} />
-     	<Route path="history" element={<History />} />
-	<Route path="history/:id" element={<WorkoutDetail />} />
-	<Route path="progress" element={<Progress />} />
-       	</Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
     </Routes>
   )
 }

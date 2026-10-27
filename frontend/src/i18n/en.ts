@@ -56,6 +56,8 @@ export default {
     change: 'Change',
     choose: 'Choose an exercise',
     notFound: 'Workout not found',
+    discard: 'Discard workout',
+
   },
   settings: { language: 'Language' },
   sync: { pending: '{{n}} waiting to sync' },

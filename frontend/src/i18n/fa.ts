@@ -34,6 +34,7 @@ export default {
     change: 'تغییر',
     choose: 'یک حرکت انتخاب کن',
     notFound: 'تمرین پیدا نشد',
+    discard: 'لغو تمرین',
   },
   settings: { language: 'زبان' },
   sync: { pending: '{{n}} مورد در انتظار همگام‌سازی' }, 
