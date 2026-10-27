@@ -195,7 +195,7 @@ export default function Workout() {
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {exSets.map((s) => {
+        {exSets.map((s,i) => {
           const live = s.id === activeSet?.id
           return (
             <div
@@ -203,7 +203,7 @@ export default function Workout() {
               className={`${chip} ${live ? 'border-2 border-accent text-accent' : 'bg-surface'}`}
             >
               <div className={live ? '' : 'text-muted'}>
-                {t('workout.set', { n: fmtNumber(s.set_number) })}
+                {t('workout.set', { n: fmtNumber(i + 1) })}
               </div>
               <div className={live ? 'text-white' : ''}>
                 {s.ended_at ? wr(s.weight_kg, s.reps) : '…'}
