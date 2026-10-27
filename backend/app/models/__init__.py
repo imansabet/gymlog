@@ -9,8 +9,8 @@ __all__ = [
     "BodyMeasurement",
     "Exercise",
     "ExerciseKind",
-    "User",
     "SetType",
+    "User",
     "Workout",
     "WorkoutSet",
 ]
