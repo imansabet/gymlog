@@ -62,12 +62,14 @@ export default function Today() {
         {workouts && recent.length === 0 && <p className="text-muted">{t('today.empty')}</p>}
         <ul className="flex flex-col gap-3 text-[15px]">
           {recent.map((w) => (
-            <li key={w.id} className="flex justify-between">
-              <span>{fmtDate(w.started_at)}</span>
-              <span className="text-muted">
-                {t('today.setsCount', { n: fmtNumber(w.sets.length) })}
-              </span>
-            </li>
+            <li key={w.id}>
+  		<Link to={`/history/${w.id}`} className="flex justify-between">
+    		<span>{fmtDate(w.started_at)}</span>
+    		<span className="text-muted">
+      			{t('today.setsCount', { n: fmtNumber(w.sets.length) })}
+    		</span>
+  	 	</Link>
+	   </li>
           ))}
         </ul>
       </section>

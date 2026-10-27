@@ -166,3 +166,36 @@ def update_set(
     db.commit()
     db.refresh(s)
     return s
+
+
+
+@router.delete("/sets/{set_id}", status_code=204)
+def delete_set(
+    set_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> None:
+    s = db.scalar(
+        select(WorkoutSet)
+        .join(Workout)
+        .where(WorkoutSet.id == set_id, Workout.user_id == user.id)
+    )
+    if s is not None:  # idempotent: حذف چیزی که نیست خطا نیست
+        db.delete(s)
+        db.commit()
+
+
+@router.delete("/workouts/{workout_id}", status_code=204)
+def delete_workout(
+    workout_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> None:
+    w = db.scalar(
+        select(Workout).where(Workout.id == workout_id, Workout.user_id == user.id)
+    )
+    if w is not None:
+        db.delete(w)
+        db.commit()
+
+

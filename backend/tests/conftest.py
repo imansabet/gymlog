@@ -51,14 +51,16 @@ def db(engine):
     outer.rollback()
     conn.close()
 
-
 @pytest.fixture
 def client(db):
-    fastapi_app.dependency_overrides[get_db] = lambda: db
+    def override():
+        db.expire_all() 
+        yield db
+
+    fastapi_app.dependency_overrides[get_db] = override
     with TestClient(fastapi_app) as c:
         yield c
     fastapi_app.dependency_overrides.clear()
-
 
 @pytest.fixture
 def exercise(db):

@@ -56,3 +56,46 @@ def test_set_cannot_end_before_it_starts(client, exercise):
 def test_naive_datetime_is_rejected(client):
     r = client.post("/workouts", json={"started_at": "2026-10-25T17:00:00"})
     assert r.status_code == 422
+
+
+
+def test_progress_aggregates_per_workout(client, exercise):
+    def session(offset, sets):
+        wid = client.post("/workouts", json={"started_at": at(offset)}).json()["id"]
+        t = offset
+        for weight, reps in sets:
+            sid = client.post(
+                f"/workouts/{wid}/sets",
+                json={
+                    "exercise_id": str(exercise.id),
+                    "started_at": at(t),
+                    "weight_kg": weight,
+                },
+            ).json()["id"]
+            client.patch(f"/sets/{sid}", json={"ended_at": at(t + 40), "reps": reps})
+            t += 160
+
+    session(0, [(10, 8), (10, 6)])
+    session(86400, [(12.5, 4), (10, 9)])
+
+    pts = client.get(f"/exercises/{exercise.id}/progress").json()
+    assert [p["top_weight_kg"] for p in pts] == [10, 12.5]
+    assert [p["top_reps"] for p in pts] == [8, 4]
+    assert [p["sets"] for p in pts] == [2, 2]
+    assert pts[1]["est_1rm_kg"] == round(12.5 * (1 + 4 / 30), 1)
+
+
+def test_deletes_are_idempotent(client, exercise):
+    wid = client.post("/workouts", json={}).json()["id"]
+    sid = client.post(
+        f"/workouts/{wid}/sets", json={"exercise_id": str(exercise.id)}
+    ).json()["id"]
+
+    assert client.delete(f"/sets/{sid}").status_code == 204
+    assert client.delete(f"/sets/{sid}").status_code == 204
+    assert client.get(f"/workouts/{wid}").json()["sets"] == []
+
+    assert client.delete(f"/workouts/{wid}").status_code == 204
+    assert client.delete(f"/workouts/{wid}").status_code == 204
+    assert client.get(f"/workouts/{wid}").status_code == 404
+    
