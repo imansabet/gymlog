@@ -59,6 +59,22 @@ export default {
     discard: 'Discard workout',
 
   },
+    kinds: {
+    barbell: 'Barbell',
+    dumbbell: 'Dumbbell',
+    cable: 'Cable',
+    machine: 'Machine',
+    bodyweight: 'Bodyweight',
+    kettlebell: 'Kettlebell',
+    band: 'Band',
+  },
+  picker: {
+    search: 'Search exercises',
+    clear: 'Clear search',
+    recent: 'Recent',
+    categories: 'Categories',
+    noResults: 'No exercise found',
+  },
   settings: { language: 'Language' },
   sync: { pending: '{{n}} waiting to sync' },
 }
