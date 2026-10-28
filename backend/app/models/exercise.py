@@ -13,7 +13,8 @@ class ExerciseKind(StrEnum):
     machine = "machine"
     cable = "cable"
     bodyweight = "bodyweight"
-
+    kettlebell = "kettlebell"
+    band = "band"
 
 class Exercise(UUIDPk, Timestamps, Base):
     __tablename__ = "exercises"

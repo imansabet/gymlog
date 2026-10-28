@@ -3,7 +3,7 @@ export type Exercise = {
   slug: string
   name_en: string
   name_fa: string
-  kind: 'barbell' | 'dumbbell' | 'machine' | 'cable' | 'bodyweight'
+  kind: 'barbell' | 'dumbbell' | 'machine' | 'cable' | 'bodyweight' | 'kettlebell' | 'band'
 }
 
 export type ProgressPoint = {
