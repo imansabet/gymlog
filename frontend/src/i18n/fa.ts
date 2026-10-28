@@ -46,6 +46,22 @@ export default {
     confirmDeleteSet: 'این ست حذف بشه؟',
     confirmDeleteWorkout: 'این تمرین کامل حذف بشه؟ قابل بازگشت نیست.',
   },
+  kinds: {
+    barbell: 'هالتر',
+    dumbbell: 'دمبل',
+    cable: 'سیم‌کش',
+    machine: 'دستگاه',
+    bodyweight: 'وزن بدن',
+    kettlebell: 'کتل‌بل',
+    band: 'کش',
+  },
+  picker: {
+    search: 'جستجوی حرکت',
+    clear: 'پاک کردن جستجو',
+    recent: 'اخیر',
+    categories: 'دسته‌ها',
+    noResults: 'حرکتی پیدا نشد',
+  },
   progress: {
     title: 'پیشرفت',
     exercise: 'حرکت',

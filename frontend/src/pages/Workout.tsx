@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Stepper from '../components/Stepper'
 import TimerRing from '../components/TimerRing'
 import { api, type WorkoutSet } from '../lib/api'
+import ExercisePicker from '../components/ExercisePicker'
+import { recentExerciseIds } from '../lib/recent'
 import { fmtDuration, fmtNumber } from '../lib/format'
 import { outbox } from '../lib/outbox'
 import { useNow } from '../lib/useNow'
@@ -102,13 +104,12 @@ export default function Workout() {
   const wr = (w: number | null, r: number | null) =>
     `${plus}${fmtNumber(w ?? 0)} × ${fmtNumber(r ?? 0)}`
 
-  // ---- انتخاب حرکت ----
    if (!currentId || picking) {
     const discard = () => {
       outbox.enqueue({ type: 'deleteWorkout', workoutId: id })
       navigate('/')
     }
-    return (
+     return (
       <div className="flex flex-col gap-4">
         <div className="flex h-11 items-center justify-between">
           <button
@@ -143,26 +144,17 @@ export default function Workout() {
           )}
         </div>
         <h1 className="text-[28px] leading-tight font-bold">{t('workout.choose')}</h1>
-        <ul className="flex flex-col gap-2">
-          {exercises.map((ex) => (
-            <li key={ex.id}>
-              <button
-                type="button"
-                onClick={() => {
-                  setChosenId(ex.id)
-                  setPicking(false)
-                }}
-                className="flex h-14 w-full items-center rounded-2xl border border-line bg-surface px-4 text-start text-[15px]"
-              >
-                {name(ex)}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <ExercisePicker
+          exercises={exercises}
+          recentIds={recentExerciseIds(history)}
+          onPick={(exId) => {
+            setChosenId(exId)
+            setPicking(false)
+          }}
+        />
       </div>
     )
   }
-    
     
   const toSec = (ms: number) => Math.max(0, Math.floor(ms / 1000))
   const workoutSec = toSec(now - new Date(workout.started_at).getTime())
